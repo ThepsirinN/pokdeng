@@ -1,0 +1,24 @@
+{
+  "name": "thepsirin_nawngerndee_pokdeng",
+  "version": "1.0.0",
+  "description": "Pokdeng game by Thepsirin Nawngerndee",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThepsirinN/pokdeng.git"
+  },
+  "author": "Thepsirin Nawngerndee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThepsirinN/pokdeng/issues"
+  },
+  "homepage": "https://github.com/ThepsirinN/pokdeng#readme",
+  "dependencies": {
+    "nodemon": "^2.0.20",
+    "prompt-sync": "^4.2.0"
+  }
+}

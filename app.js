@@ -30,6 +30,7 @@ let drewCard = [];
 let playerCard = [];
 let result = []
 let prize = 1 // เล่นป๊อกเด้งตาละ 1 บาท
+let all_money = []
 
 const calulatePoint = (card1, card2, card3 = "0,0") => {
   let score1 =
@@ -55,7 +56,7 @@ const generatePlayerCard = (numPlayer) => {
     radomColor1 = Math.floor(Math.random() * 4);
     randomValue2 = Math.floor(Math.random() * 13);
     radomColor2 = Math.floor(Math.random() * 4);
-    // check duplicate and  get next player
+    // check duplicate and get next player
     card1 = `${cardValue[randomValue1]},${cardColor[radomColor1]}`;
     card2 = `${cardValue[randomValue2]},${cardColor[radomColor2]}`;
     if (!drewCard.includes(card1) && !drewCard.includes(card2)) {
@@ -97,14 +98,27 @@ const showResult = (numberOfPlayer) => {
   cName1 = cardName[playerCard[i][0].split(",")[0]] + cardColorName[playerCard[i][0].split(",")[1]]
   cName2 = cardName[playerCard[i][1].split(",")[0]] + cardColorName[playerCard[i][1].split(",")[1]]
   score = playerCard[i][2]
-  showPrice = result[i] >= 0 ? `ได้ ${result[i]}` : `เสีย ${result[i]}`
+  showPrice = result[i] >= 0 ? `ได้ ${result[i]}` : `เสีย ${result[i]*-1}`
   console.log(`${playerName} ถือไพ่ ${cName1} และ ${cName2} ,มีแต้ม ${score} แต้ม ${showPrice} บาท`)
   i++
   }
 }
 
-let response = "";
+const calculateAllMoney = (numberOfPlayer) => {
+  let i = 0
+  if (all_money.length != numberOfPlayer){
+    all_money = Array(response).fill(0)
+  }
+  while (i < numberOfPlayer){
+    all_money[i] += result[i]
+    i++
+  }
+}
+
+let response = -1;
+let temp_player
 while (true) {
+  temp_player = response
   response = parseInt(
     prompt("Please Enter Number of player (2 - 17) (0 is break) :")
   );
@@ -117,12 +131,27 @@ while (true) {
     console.log("=".repeat(25));
     response = "";
   } else {
+    drewCard = [];
+    playerCard = [];
     generatePlayerCard(response);
     // player number 0 is เจ้ามือ
+    result = []
     result = Array(response).fill(0)
     checkWinLose(playerCard,response);
     showResult(response)
+    calculateAllMoney(response)
   }
+}
+
+let cnt = 0
+while (cnt < temp_player){
+  playerName = `ผู้เล่นคนที่ ${cnt}`
+  if (cnt === 0){
+    playerName = `เจ้ามือ`
+  }
+  let allPrice = all_money[cnt] >= 0 ? `ได้เงินทั้งสิ้น ${all_money[cnt]}` : `เสียเงินทั้งสิ้น ${all_money[cnt]*-1}`
+  console.log(`${playerName} ${allPrice} บาท`)
+  cnt++
 }
 
 console.log("See you again. EiEi.");
